@@ -1,0 +1,6 @@
+Django
+Pillow
+django-extensions
+werkzeug
+sorl-thumbnail
+gitpython

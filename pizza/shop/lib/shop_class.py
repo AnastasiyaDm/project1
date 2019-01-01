@@ -8,3 +8,4 @@ def shop_processor(request):
     repo = Repo('.')
     branch_name = repo.active_branch.name
     return {'shop': shop, 'branch_name': branch_name}
+    #return {'shop': shop}

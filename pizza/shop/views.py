@@ -2,14 +2,35 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as l, logout
 from django.contrib import messages
-from .forms import RegForm
+#from .forms import RegForm
+from account.forms import CustomerRegForm as RegForm
 from .lib.shop_class import Shop
+from .models.pizza import Pizza
+from .models.order import Order
+from .forms import OrderForm
 
 # Create your views here.
+def order(request,pizza_id):
+    pizza = Pizza.objects.get(pk=pizza_id)
+    orders = Order.objects.all()
+    o=Order()
+    o.pizza=pizza
+    o.save()
+    messages.warning(request, 'Success!!!')
+    return render(request,'shop/order_list.html',{'orders': orders})
+
+def detail(request,name):
+    pizza = Pizza.objects.get(name_slug=name)
+    order=Order()
+    order.pizza=pizza
+    form = OrderForm(instance=order)
+    return render(request,'shop/detail.html',{'pizza': pizza,'form':form})
+
 def home(request):
     form = RegForm()
     shop = Shop()
-    return render(request,'shop/home.html',{'shop': shop,'form': form})
+    pizzas = Pizza.objects.all()
+    return render(request,'shop/home.html', {'shop': shop, 'form': form,'pizzas': pizzas})
 
 def login(request):
     username = request.POST['login']
@@ -32,9 +53,10 @@ def registration(request):
         form = RegForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            username = form.cleaned_data['username']
-            messages.success(request, 'Bingo %s !!!' % username)
-            return redirect('home')
+            #username = form.cleaned_data['username']
+            user = form.save()
+            messages.success(request, 'You are registered, %s!' % user.id)
+        return redirect('home')
         # if a GET (or any other method) we'll create a blank form
     else:
-        form = NameForm()
+        form = RegForm()

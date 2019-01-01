@@ -16,11 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shop.views import *
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('admin/', admin.site.urls),
+    path('detail/<str:name>', detail, name="detail"),
+    path('order/<int:pizza_id>', order, name="order"),
     path('login', login, name='login'),
     path('logout', logoutme, name='logout'),
     path('registration', registration, name='registration')
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

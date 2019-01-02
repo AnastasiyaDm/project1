@@ -8,3 +8,10 @@ class PizzaAdmin(admin.ModelAdmin):
     readonly_fields=['name_slug']
 
 admin.site.register(Pizza, PizzaAdmin)
+
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['pizza','address', 'name', 'phone']
+
+admin.site.register(Order, OrderAdmin)

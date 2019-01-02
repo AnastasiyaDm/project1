@@ -17,7 +17,7 @@
               stroke-linecap="round" stroke-linejoin="round" class="mr-2">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
               </path><circle cx="12" cy="13" r="4"></circle></svg>
-              <strong>{{ shop.name }} {{branch.name}}</strong>
+              <strong>{{ shop.name }} {{branch_name}}</strong>
             </a>
             {% block header %}{% endblock %}
 
@@ -29,13 +29,28 @@
                   </ul>
 
             {% else %}
-            <form action="{% url 'login' %}" method="POST" class="form-inline mt-2 mt-md-0">
-                    {% csrf_token %}
-                    <input class="form-control mr-sm-2" type="text" name="login" placeholder="Login" >
+            <!--<form action="{% url 'login' %}" method="POST" class="form-inline mt-2 mt-md-0">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="text" name="login" placeholder="Login" >
                     <input class="form-control mr-sm-2" type="text" name="password" placeholder="Password" >
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SignIn</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SignIn</button>-->
+
+                    <form action="{% url 'login' %}" id="login_form" method="POST" class="form-inline mt-2 mt-md-0">
+                    {% csrf_token %}
+                    <input id="login_field" class="form-control mr-sm-2" type="text" name="login" placeholder="Login" >
+                    <input id="pwd_field" class="form-control mr-sm-2" type="text" name="password" placeholder="Password" >
+                    <input id="login_link" class="btn btn-outline-success my-2 my-sm-0" type="submit" name="SignIn" value="SignIn"/>
             </form>
+            <!--<a class="nav-link" id="logout_link" style="display: none" href="{% url 'logout' %}">Logout</a>-->
+            <ul class="navbar-nav " id="logout_link" style="display: none">
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+              </ul>
             {% endif %}
+
+
+
 
           </div>
         </div>
@@ -67,4 +82,6 @@
             {% block footer %}{% endblock %}
         </div>
       </footer>
+      <script src="/static/jquery/dist/jquery.min.js"></script>
+      <script src="{% static 'prj.js' %}"></script>
 </html>

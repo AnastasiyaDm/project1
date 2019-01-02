@@ -6,3 +6,6 @@ sorl-thumbnail
 gitpython
 django-widget-tweaks
 python_slugify==1.2.4
+django-jsonview
+django-crispy-forms==1.7.2
+
